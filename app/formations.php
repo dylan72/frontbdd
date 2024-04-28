@@ -16,7 +16,6 @@
         Créer une formation
     </button>
 
-    <!-- Création d'une formation -->
     <div class="modal fade" id="modalCreerFormation" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -97,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 formationsContainer.innerHTML = '';
-                if(data.length === 0) {
+                if (data.length === 0) {
                     noFormationMessage.style.display = 'block';
                 } else {
                     noFormationMessage.style.display = 'none';
@@ -109,19 +108,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="card-body">
                                     <h5 class="card-title">${formation.libelle}</h5>
                                     <p class="card-text">${formation.description}</p>
+                                    ${formation.formateur ? `<p class="card-text"><strong>Formateur:</strong> ${formation.formateur.prenom} ${formation.formateur.nom}</p>` : ''}
                                     <div class="d-flex justify-content-between align-items-center">
                                         <small class="text-muted">Prix: ${formation.prix}€</small>
                                         <div>
-
-                                             <button class="btn btn-sm btn-outline-secondary btnModifier" data-id="${formation.id}">
-                                                 <i class="fas fa-edit"></i>
-                                             </button>
-
-                                             <button class="btn btn-sm btn-danger btnSupprimer" data-id="${formation.id}">
-                                                 <i class="fas fa-trash"></i>
-                                             </button>
-
-
+                                            <button class="btn btn-sm btn-outline-secondary btnModifier" data-id="${formation.id}">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger btnSupprimer" data-id="${formation.id}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         `;
                         formationsContainer.appendChild(cardElement);
                     });
-                    attachEventListeners();
                 }
             })
             .catch(error => {
@@ -155,6 +150,22 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Erreur lors du chargement des formateurs:', error));
     };
 
+    chargerFormations();
+    chargerFormateurs();
+
+    formationsContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('btnModifier') || e.target.closest('.btnModifier')) {
+            const formationId = e.target.dataset.id || e.target.closest('.btnModifier').dataset.id;
+            $('#modalModifierFormation').modal('show');
+            document.getElementById('idFormationModifier').value = formationId;
+        } else if (e.target.classList.contains('btnSupprimer') || e.target.closest('.btnSupprimer')) {
+            const formationId = e.target.dataset.id || e.target.closest('.btnSupprimer').dataset.id;
+            if(confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')) {
+                supprimerFormation(formationId);
+            }
+        }
+    });
+
     const supprimerFormation = (formationId) => {
         fetch(`http://localhost:9000/formations/${formationId}`, {
             method: 'DELETE'
@@ -166,25 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
             chargerFormations();
         })
         .catch(error => console.error('Erreur lors de la suppression de la formation:', error));
-    };
-
-    const attachEventListeners = () => {
-        document.querySelectorAll('.btnModifier').forEach(button => {
-            button.addEventListener('click', function() {
-                const formationId = this.getAttribute('data-id');
-                $('#modalModifierFormation').modal('show');
-                document.getElementById('idFormationModifier').value = formationId;
-            });
-        });
-
-        document.querySelectorAll('.btnSupprimer').forEach(button => {
-            button.addEventListener('click', function() {
-                const formationId = this.getAttribute('data-id');
-                if(confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')) {
-                    supprimerFormation(formationId);
-                }
-            });
-        });
     };
 
     document.getElementById('btnCreerFormation').addEventListener('click', () => {
@@ -213,9 +205,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    chargerFormations();
-    chargerFormateurs();
+    document.getElementById('btnModifierFormation').addEventListener('click', () => {
+        const idFormateur = document.getElementById('idFormateur').value;
+        const idFormation = document.getElementById('idFormationModifier').value;
+
+        if (!idFormateur || !idFormation) {
+            alert('Informations incomplètes pour la modification. Veuillez sélectionner un formateur et vérifier l\'identifiant de la formation.');
+            return;
+        }
+
+        fetch(`http://localhost:9000/formations/users/${idFormation}/${idFormateur}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message || 'Modifications enregistrées avec succès!');
+            $('#modalModifierFormation').modal('hide');
+            chargerFormations();
+        })
+        .catch(error => {
+            console.error('Erreur lors de la modification:', error);
+            alert('Erreur lors de la modification: ' + error.message);
+        });
+    });
 });
 </script>
+
 </body>
 </html>
