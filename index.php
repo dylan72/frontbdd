@@ -24,6 +24,7 @@
         <div class="col-md-7">
             <h2 class="featurette-heading">Facilite de gestion <span class="text-muted">de réservation des salles</span></h2>
             <p class="lead">Gérez facilement les utilisateurs, salles, séances, formations, le tout en quelques clics.</p>
+            <p class="lead">Tout est centralisé et intuitif.</p>
         </div>
         <div class="col-md-5">
             <img src="images/salle_reu.jpeg" class="bordered-image" width="300" height="200">
