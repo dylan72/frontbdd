@@ -36,7 +36,5 @@ Le site comprend cinq pages principales, chacune avec des fonctionnalités spéc
 - **Modifier une séance** : Modification des détails de la séance (`PUT`).
 - **Supprimer une séance** : Annulation de la séance programmée (`DELETE`).
 
-**Note** : Il se peut que l'ajout d'une séance échoue lors de la première tentative. Il faut confirmer l'ajout une seconde fois pour assurer l'enregistrement.
-
 ### Intégration avec RabbitMQ
 L'utilisation de RabbitMQ permet une gestion automatique des dépendances entre les données. Par exemple, la suppression d'une formation ou d'une salle entraîne la suppression des séances associées. De même, la suppression d'un utilisateur ayant le rôle de formateur entraîne la suppression des formations liées à cet utilisateur.

@@ -175,9 +175,17 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     document.getElementById('btnCreerFormation').addEventListener('click', () => {
+        const libelle = document.getElementById('libelle').value;
+        const description = document.getElementById('description').value;
+
+        if (!libelle || !description) {
+            alert('Veuillez remplir tous les champs.');
+            return;
+        }
+
         const formationInfo = {
-            libelle: document.getElementById('libelle').value,
-            description: document.getElementById('description').value,
+            libelle,
+            description,
         };
 
         fetch('http://localhost:9000/formations/', {

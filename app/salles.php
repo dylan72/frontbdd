@@ -164,6 +164,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var capacite = document.getElementById('capacite').value;
         var disponible = document.getElementById('disponible').checked;
 
+        if (!numeroSalle || !nomSalle || !batiment || !capacite) {
+            alert('Veuillez remplir tous les champs.');
+            return;
+        }
+
         fetch('http://localhost:9000/salles/', {
             method: 'POST',
             headers: {
@@ -196,34 +201,34 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#modalModifierSalle').modal('show');
     };
 
-window.toggleDisponibilite = function(numeroSalle, nouvelleDisponibilite) {
-    const messageConfirmation = nouvelleDisponibilite
-        ? "Souhaitez-vous rendre cette salle disponible ?"
-        : "Souhaitez-vous rendre cette salle indisponible ?";
+    window.toggleDisponibilite = function(numeroSalle, nouvelleDisponibilite) {
+        const messageConfirmation = nouvelleDisponibilite
+            ? "Souhaitez-vous rendre cette salle disponible ?"
+            : "Souhaitez-vous rendre cette salle indisponible ?";
 
-    if (confirm(messageConfirmation)) {
-        fetch(`http://localhost:9000/salles/dispo=${numeroSalle}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                disponible: nouvelleDisponibilite
+        if (confirm(messageConfirmation)) {
+            fetch(`http://localhost:9000/salles/dispo=${numeroSalle}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    disponible: nouvelleDisponibilite
+                })
             })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erreur de réseau ou du serveur');
-            }
-            chargerSalles();
-            alert(nouvelleDisponibilite ? "La salle est maintenant disponible." : "La salle est maintenant indisponible.");
-        })
-        .catch(error => {
-            console.error('Erreur lors de la modification de la disponibilité:', error);
-            alert('Erreur lors de la modification de la disponibilité: ' + error.message);
-        });
-    }
-};
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur de réseau ou du serveur');
+                }
+                chargerSalles();
+                alert(nouvelleDisponibilite ? "La salle est maintenant disponible." : "La salle est maintenant indisponible.");
+            })
+            .catch(error => {
+                console.error('Erreur lors de la modification de la disponibilité:', error);
+                alert('Erreur lors de la modification de la disponibilité: ' + error.message);
+            });
+        }
+    };
 
 
     window.soumettreModification = function() {

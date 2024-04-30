@@ -125,6 +125,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Vérification de l'email avec une expression régulière
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Veuillez entrer une adresse email valide.');
+            return;
+        }
+
         fetch('http://localhost:9000/utilisateurs/', {
             method: 'POST',
             headers: {
@@ -169,5 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
     chargerUtilisateurs();
 });
 </script>
+
 </body>
 </html>
