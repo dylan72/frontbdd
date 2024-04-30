@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error("Erreur lors de la récupération des données:", error);
-                utilisateursContainer.innerHTML = `<p>Erreur lors du chargement des données.</p>`;
+                utilisateursContainer.innerHTML = `<p>Aucun utilisateur existant</p>`;
             });
     };
 

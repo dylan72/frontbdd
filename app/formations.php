@@ -51,8 +51,8 @@
 
     <div id="formationsContainer" class="mt-3 row"></div>
 
-    <div id="noFormationMessage" class="mt-3 text-center" style="display: none;">
-        <p>Pas de formations disponibles.</p>
+    <div id="noFormationMessage" style="display: none;">
+        <p>Aucune formation existante</p>
     </div>
 
     <div class="modal fade" id="modalModifierFormation" tabindex="-1" role="dialog" aria-labelledby="modalModifierLabel" aria-hidden="true">

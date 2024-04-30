@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error("Erreur lors de la récupération des données:", error);
-                sallesContainer.innerHTML = `<p>Erreur lors du chargement des données: ${error.message}</p>`;
+                sallesContainer.innerHTML = `<p>Aucune salle existante</p>`;
             });
     };
 
