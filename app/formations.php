@@ -35,10 +35,6 @@
                             <label for="description">Description</label>
                             <input type="text" class="form-control" id="description" required>
                         </div>
-                        <div class="form-group">
-                            <label for="prix">Prix</label>
-                            <input type="number" class="form-control" id="prix" required>
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -110,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <p class="card-text">${formation.description}</p>
                                     ${formation.formateur ? `<p class="card-text"><strong>Formateur:</strong> ${formation.formateur.prenom} ${formation.formateur.nom}</p>` : ''}
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">Prix: ${formation.prix}€</small>
                                         <div>
                                             <button class="btn btn-sm btn-outline-secondary btnModifier" data-id="${formation.id}">
                                                 <i class="fas fa-edit"></i>
@@ -183,7 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const formationInfo = {
             libelle: document.getElementById('libelle').value,
             description: document.getElementById('description').value,
-            prix: document.getElementById('prix').value
         };
 
         fetch('http://localhost:9000/formations/', {
