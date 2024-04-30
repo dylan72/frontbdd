@@ -101,7 +101,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" onclick="soumettreModificationSeance()">Enregistrer les changements</button>
+                    <button type="button" class="btn btn-primary buttonedit" onclick="soumettreModificationSeance()">Enregistrer les changements</button>
                 </div>
             </div>
         </div>
